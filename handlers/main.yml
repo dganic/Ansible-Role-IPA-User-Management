@@ -1,0 +1,11 @@
+---
+
+- name: Create user init file with generated random password
+  local_action:
+    module: copy
+    content: "{{ 'username: '+ ipauser.results[index].item.name + ' | password: ' + ipauser.results[index].user.randompassword }}"
+    dest: "{{ user_init_file + ipauser.results[index].item.name + '.txt' }}"
+  when: ipauser.results[index].user
+  loop: "{{ users }}"
+  loop_control:
+    index_var: index

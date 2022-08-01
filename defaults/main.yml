@@ -1,0 +1,4 @@
+---
+ipa_server: 172.31.104.24
+user_list: /home/user/ansible/ipausers/users.yml
+user_init_file: /home/user/ansible/ipausers/created/

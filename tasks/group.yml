@@ -1,0 +1,29 @@
+---
+
+- name: FreeIPA | Group manage | Make a list with unique user groups
+  set_fact:
+    groups_list: "{{ ( groups_list | default([]) + item.groups ) | unique }}" 
+  loop: "{{ users }}"
+
+- name: FreeIPA | Group manage | Print list of unique user groups   
+  debug: 
+    msg: "List of unique user groups: {{ groups_list }}"
+
+- name: FreeIPA | Group manage | Ensure user groups present
+  freeipa.ansible_freeipa.ipagroup:
+    ipaadmin_principal: "{{ lookup('env', 'LOGNAME') }}"
+    name: "{{ item }}"
+    state: present
+  loop: "{{ groups_list | lower }}"
+
+- name: FreeIPA | Group manage | Ensure users present to groups
+  freeipa.ansible_freeipa.ipagroup:
+    ipaadmin_principal: "{{ lookup('env', 'LOGNAME') }}"
+    name: "{{ item.0 }}"
+    action: member
+    user:
+      - "{{ item.1.name }}"
+  when: item.0 in item.1.groups
+  with_nested: 
+    - "{{ groups_list | lower }}"
+    - "{{ users | lower }}"

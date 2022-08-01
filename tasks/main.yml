@@ -1,0 +1,20 @@
+---
+
+- name: "Import user list from file"
+  include_vars: "{{ user_list }}"
+  tags:
+    - user
+    - group
+
+- block:
+  - name: User manage
+    include_tasks: "user.yml"
+  tags: 
+    - user
+
+- block:
+  - name: Group manage
+    include_tasks: "group.yml"
+  tags: 
+    - group
+    

@@ -1,0 +1,18 @@
+---
+
+- name: FreeIPA | User manage | Ensure users present
+  freeipa.ansible_freeipa.ipauser:
+    ipaadmin_principal: "{{ lookup('env', 'LOGNAME') }}"
+    name: "{{ item.name | lower }}"
+    first: "{{ item.first | capitalize }}"
+    last: "{{ item.last | capitalize }}"
+    email: "{{ item.email | lower }}"
+    state: present
+    random: yes
+    update_password: on_create
+  register: "ipauser"
+  notify: Create user init file with generated random password
+  loop: "{{ users }}"
+
+- name: FreeIPA | User manage | Run handlers
+  meta: flush_handlers

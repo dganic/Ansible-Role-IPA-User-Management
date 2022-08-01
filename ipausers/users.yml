@@ -1,0 +1,21 @@
+users:
+   - name: ivanovi
+     first: Ivan
+     last: Ivanov
+     email: ivan.ivanov@example.com
+     groups: 
+       - one-dcs_communigatepro
+   - name: sidorovs
+     first: Sergey
+     last: Sidorov
+     email: Sergey.Sidorov@example.com
+     groups: 
+       - one-dcs_communigatepro
+       - ssh-users
+   - name: petrovp
+     first: Petr
+     last: Petrov
+     email: petrov.petr@example.com
+     groups: 
+       - one-dcs_aldpro
+       - gitlab-dcs-admins
